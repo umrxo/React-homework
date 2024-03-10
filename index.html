@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+    
+    <script type="text/babel">
+        
+        function App () {
+                           
+            const [ list, setList ] = React.useState([])
+            const [ text, setText ] = React.useState('')
+            const [ game, setGame ] = React.useState('')
+            const [ dota, setDota ] = React.useState(['one','two'])
+            const [ pess, setPess ] = React.useState(['three','four'])
+            const [ cs, setCs ] = React.useState(['five','six'])
+            
+            
+            const addNote = (event) => {
+                event.preventDefault();
+                if(!dota.includes(text)&&!pess.includes(text)&&!cs.includes(text)){
+                    if(game == 'PESS' && text.length >2 ){
+                        setPess([...pess,text])
+                    }else if(game == 'DOTA'&& text.length >2 ){
+                        setDota([...dota,text])
+                    }else if(game == 'CSGO'&& text.length >2){
+                        setCs([...cs,text])
+                    }
+                }else{
+                    alert("This name already exists")
+                }
+                setText('')
+                
+                
+            }
+            
+            return (
+                <div className="wrapper">
+
+                    <form onSubmit={(event) => addNote(event)}>
+                        <input 
+                            type="text" 
+                            placeholder="Write your name"
+                            value={text}
+                            onChange={(event) => setText(event.target.value)}
+                        />
+                        <select value={game} onChange={(event) => setGame(event.target.value)}>
+                            <option>CHOOSE THE GAME</option>
+                            <option>PESS</option>    
+                            <option>DOTA</option>    
+                            <option>CSGO</option>    
+                            </select>
+                            <button>ADD</button>
+                    </form>
+
+                    <div class="list">
+                    <li>
+                    <h2>PESS</h2>{
+                    pess.map((item,i)=>(
+                        <p key={i}>{item}</p>
+                    ))
+                    }
+                    </li>    
+                    <li>
+                    <h2>DOTA</h2> 
+                    {
+                    dota.map((item,i)=>(
+                        <p key={i}>{item}</p>
+                    ))
+                    }
+                    </li>    
+                    <li>
+                    <h2>CSGO</h2> 
+                    {
+                    cs.map((item,i)=>(
+                        <p key={i}>{item}</p>
+                    ))
+                    }   
+                    </li>    
+                    </div>
+                </div>
+            )
+        }
+        
+        const app = document.getElementById('root')
+        const root = ReactDOM.createRoot(app)
+        root.render(<App/>)
+    </script>
+    
+</body>
+</html>
